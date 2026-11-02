@@ -4,6 +4,7 @@
   "private": true,
   "description": "ชุดติดตั้งสภาพแวดล้อมสำหรับข้อสอบปลายภาค 88736065",
   "scripts": {
+    "start": "node server.js",
     "seed": "node scripts/seed.js",
     "check": "node scripts/check-env.js",
     "test": "jest"

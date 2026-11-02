@@ -13,4 +13,18 @@ const pool = mysql.createPool({
   queueLimit: 0,
 });
 
-module.exports = { pool };
+// Proxy เพื่อให้รองรับทั้ง const pool = require('./db') และ const { pool } = require('./db')
+const dbExport = new Proxy(pool, {
+  get(target, prop, receiver) {
+    if (prop === "pool") {
+      return target;
+    }
+    const val = Reflect.get(target, prop, receiver);
+    if (typeof val === "function") {
+      return val.bind(target);
+    }
+    return val;
+  },
+});
+
+module.exports = dbExport;
